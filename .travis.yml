@@ -1,0 +1,16 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t danielespejelps/fib-react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run danielespejelps/fib-react-test npm test -- --coverage
+
+after_success:
+  - docker build -t danielespejelps/fib-client ./client
+  - docker build -t danielespejelps/nginx ./nginx
+  - docker build -t danielespejelps/server ./server
+  - docker build -t danielespejelps/worker ./worker
