@@ -14,3 +14,12 @@ after_success:
   - docker build -t danielespejelps/nginx ./nginx
   - docker build -t danielespejelps/server ./server
   - docker build -t danielespejelps/worker ./worker
+
+# Log in to the docker CLI. These lines are interpreted by travisci as environment
+# variables, configurable from travis Web page
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# Take those images and push them to docker
+  - docker push danielespejelps/fib-client
+  - docker push danielespejelps/nginx
+  - docker push danielespejelps/server
+  - docker push danielespejelps/worker
